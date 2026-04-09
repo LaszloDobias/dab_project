@@ -24,6 +24,7 @@ targets:
     default: true
     workspace:
       host: https://adb-7405617250614037.17.azuredatabricks.net
+      root_path: /Workspace/Users/zebulonia@mail.com/bundle_deployments/${bundle.name}/${bundle.target}
     variables:
       catalog: dbw_dev
       schema: dev
