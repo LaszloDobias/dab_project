@@ -23,31 +23,31 @@ targets:
     mode: development
     default: true
     workspace:
-      host: https://adb-7405617250614037.17.azuredatabricks.net
+      host: https://adb-7405607700420185.5.azuredatabricks.net
     variables:
       catalog: dbw_dev
       schema: dev
   test:
     mode: production
     workspace:
-      host: https://adb-7405611355735302.2.azuredatabricks.net
-      # We explicitly deploy to /Workspace/Users/zebulonia@mail.com to make sure we only have a single copy.
+      host: https://adb-7405618204303753.13.azuredatabricks.net/
+      # We explicitly deploy to /Workspace/Users/dobiasz.laszlo@outlook.com to make sure we only have a single copy.
       root_path: /Workspace/Shared/.bundle/${bundle.name}/${bundle.target}
     variables:
       catalog: dbw_dev
       schema: prod
     permissions:
-      - user_name: zebulonia@mail.com
+      - user_name: dobiasz.laszlo@outlook.com
         level: CAN_MANAGE    
   prod:
     mode: production
     workspace:
-      host: https://adb-7405608696576838.18.azuredatabricks.net
-      # We explicitly deploy to /Workspace/Users/zebulonia@mail.com to make sure we only have a single copy.
+      host: https://adb-7405613840216350.10.azuredatabricks.net/
+      # We explicitly deploy to /Workspace/Users/dobiasz.laszlo@outlook.com to make sure we only have a single copy.
       root_path: /Workspace/Shared/.bundle/${bundle.name}/${bundle.target}
     variables:
       catalog: dbw_dev
       schema: prod
     permissions:
-      - user_name: zebulonia@mail.com
+      - user_name: dobiasz.laszlo@outlook.com
         level: CAN_MANAGE
