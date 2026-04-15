@@ -1,6 +1,5 @@
 import sys
 
-
 from citibike.citibike_utils import get_trip_duration_mins
 from utils.datetime_utils import timestamp_to_date_col
 from pyspark.sql.functions import create_map, lit
@@ -17,13 +16,19 @@ df = get_trip_duration_mins(spark, df, "started_at", "ended_at", "trip_duration_
 
 df = timestamp_to_date_col(spark, df, "started_at", "trip_start_date")
 
-df = df.withColumn("metadata", 
-              create_map(
-                  lit("pipeline_id"), lit(pipeline_id),
-                  lit("run_id"), lit(run_id),
-                  lit("task_id"), lit(task_id),
-                  lit("processed_date"), lit(processed_timestamp)
-                  ))
+df = df.withColumn(
+    "metadata",
+    create_map(
+        lit("pipeline_id"),
+        lit(pipeline_id),
+        lit("run_id"),
+        lit(run_id),
+        lit("task_id"),
+        lit(task_id),
+        lit("processed_date"),
+        lit(processed_timestamp),
+    ),
+)
 
 df = df.select(
     "ride_id",
@@ -33,10 +38,7 @@ df = df.select(
     "start_station_name",
     "end_station_name",
     "trip_duration_mins",
-    "metadata"
-    )
+    "metadata",
+)
 
-df.write.\
-    mode("overwrite").\
-    option("overwriteSchema", "true").\
-    saveAsTable(f"{catalog}.02_silver.jc_citibike")
+df.write.mode("overwrite").option("overwriteSchema", "true").saveAsTable(f"{catalog}.02_silver.jc_citibike")
