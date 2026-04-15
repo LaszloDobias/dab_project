@@ -8,11 +8,10 @@ include:
   - resources/*.yml
 
 # Variable declarations. These variables are assigned in the dev/prod targets below.
-variables:
+variables: 
   catalog:
+    default: "citibike_dev"
     description: The catalog to use
-  schema:
-    description: The schema to use
 
 targets:
   dev:
@@ -24,9 +23,6 @@ targets:
     default: true
     workspace:
       host: https://adb-7405607700420185.5.azuredatabricks.net
-    variables:
-      catalog: dbw_dev
-      schema: dev
   test:
     mode: production
     workspace:
@@ -34,8 +30,7 @@ targets:
       # We explicitly deploy to /Workspace/Users/dobiasz.laszlo@outlook.com to make sure we only have a single copy.
       root_path: /Workspace/Shared/.bundle/${bundle.name}/${bundle.target}
     variables:
-      catalog: dbw_dev
-      schema: prod
+      catalog: "citibike_test"
     permissions:
       - user_name: dobiasz.laszlo@outlook.com
         level: CAN_MANAGE    
@@ -46,8 +41,7 @@ targets:
       # We explicitly deploy to /Workspace/Users/dobiasz.laszlo@outlook.com to make sure we only have a single copy.
       root_path: /Workspace/Shared/.bundle/${bundle.name}/${bundle.target}
     variables:
-      catalog: dbw_dev
-      schema: prod
+      catalog: "citibike_prod"
     permissions:
       - user_name: dobiasz.laszlo@outlook.com
         level: CAN_MANAGE
