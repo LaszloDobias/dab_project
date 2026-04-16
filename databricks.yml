@@ -12,6 +12,9 @@ variables:
   catalog:
     default: "citibike_dev"
     description: The catalog to use
+  dev_flag:
+    default: "true"
+    description: Whether to deploy the pipeline in development mode (true) or production mode (false)  
 
 targets:
   dev:
@@ -31,6 +34,7 @@ targets:
       root_path: /Workspace/Shared/.bundle/${bundle.name}/${bundle.target}
     variables:
       catalog: "citibike_test"
+      dev_flag: "false"
     permissions:
       - user_name: dobiasz.laszlo@outlook.com
         level: CAN_MANAGE    
@@ -42,6 +46,7 @@ targets:
       root_path: /Workspace/Shared/.bundle/${bundle.name}/${bundle.target}
     variables:
       catalog: "citibike_prod"
+      dev_flag: "false"
     permissions:
       - user_name: dobiasz.laszlo@outlook.com
         level: CAN_MANAGE
