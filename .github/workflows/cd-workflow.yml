@@ -1,0 +1,87 @@
+name: CD Workflow
+
+on:
+ push:
+   branches:
+     - main
+
+jobs:
+  cd-deploy-test:
+    name: Deploy to TEST
+    runs-on: ubuntu-latest
+    environment: test
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.12'
+
+      - name: Install Databricks CLI
+        run: curl -fsSL https://raw.githubusercontent.com/databricks/setup-cli/main/install.sh | sh
+      
+      - name: Install Dependencies
+        run: |
+          pip isnatll --upgrade pip
+          pip install setuptools wheel
+
+      - name: Configure Databricks
+        run: |
+          # Write out the profile
+          cat <<EOF > ~/.databrickscfg
+          [Learning TEST]
+          host = host  = https://adb-7405618204303753.13.azuredatabricks.net/
+          azure_client_id = ${{ secrets.AZURE_CLIENT_ID }}
+          azure_tenant_id = ${{ secrets.AZURE_TENANT_ID }}
+          azure_client_secret = ${{ secrets.AZURE_CLIENT_SECRET }}
+          EOF
+
+      - name: Deploy to TEST
+        run: |
+          databricks bundle deploy \
+            --target test \
+            --profile 'Learning TEST'
+          
+  cd-deploy-prod:
+    name: Deploy to PROD
+    needs: cd-deploy-test
+    runs-on: ubuntu-latest
+    environment: prod
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.12'
+
+      - name: Install Databricks CLI
+        run: curl -fsSL https://raw.githubusercontent.com/databricks/setup-cli/main/install.sh | sh
+      
+      - name: Install Dependencies
+        run: |
+          pip isnatll --upgrade pip
+          pip install setuptools wheel
+
+      - name: Configure Databricks
+        run: |
+          # Write out the profile
+          cat <<EOF > ~/.databrickscfg
+          [Learning TEST]
+          host = host  = https://adb-7405613840216350.10.azuredatabricks.net/
+          azure_client_id = ${{ secrets.AZURE_CLIENT_ID }}
+          azure_tenant_id = ${{ secrets.AZURE_TENANT_ID }}
+          azure_client_secret = ${{ secrets.AZURE_CLIENT_SECRET }}
+          EOF
+
+      - name: Deploy to TEST
+        run: |
+          databricks bundle deploy \
+            --target prod \
+            --profile 'Learning PROD'         
+      
+     
+   
