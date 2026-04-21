@@ -36,8 +36,10 @@ targets:
       catalog: "citibike_test"
       dev_flag: "false"
     permissions:
-      - user_name: dobiasz.laszlo@outlook.com
+      - service_principal_name: 91929b53-9234-448e-b3b9-ee5160dd5dd3
         level: CAN_MANAGE    
+    run_as:
+      service_principal_name: 91929b53-9234-448e-b3b9-ee5160dd5dd3   
   prod:
     mode: production
     workspace:
@@ -48,5 +50,7 @@ targets:
       catalog: "citibike_prod"
       dev_flag: "false"
     permissions:
-      - user_name: dobiasz.laszlo@outlook.com
+      - service_principal_name: a4da4a6d-dc9f-419c-9ed2-21b9f9da98db
         level: CAN_MANAGE
+    run_as:
+      service_principal_name: a4da4a6d-dc9f-419c-9ed2-21b9f9da98db
