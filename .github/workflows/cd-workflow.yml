@@ -70,7 +70,7 @@ jobs:
         run: |
           # Write out the profile
           cat <<EOF > ~/.databrickscfg
-          [Learning TEST]
+          [Learning PROD]
           host = https://adb-7405613840216350.10.azuredatabricks.net
           azure_client_id = ${{ secrets.AZURE_CLIENT_ID }}
           azure_tenant_id = ${{ secrets.AZURE_TENANT_ID }}
